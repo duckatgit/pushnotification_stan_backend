@@ -23,13 +23,11 @@ export class NotificationsController {
     @Post('send')
     async sendNotification(
         @Body() body: {
-            deviceToken: string;
-            message: string;
+            token: string;
         },
     ) {
         return this.notificationsService.sendFCMNotification(
-            body.message,
-            body.deviceToken,
+            body.token,
         );
     }
 }

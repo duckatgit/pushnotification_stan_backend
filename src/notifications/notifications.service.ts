@@ -62,21 +62,22 @@ export class NotificationsService {
     }
 
     async sendFCMNotification(
-        message: string,
-        deviceToken: string,
+        token: string,
     ): Promise<void> {
         try {
             const accessToken = await this.getAccessToken();
 
             const payload = {
                 message: {
-                    token: deviceToken,
+                    token: token,
                     notification: {
                         title: "Notification",
-                        body: message,
+                        body: "Notification Recieved",
                     },
                 },
             };
+
+            console.log('payload', payload)
 
             try {
                 const response = await axios.post(
@@ -90,9 +91,9 @@ export class NotificationsService {
                     },
                 );
 
-                console.log(`Notification sent successfully to ${deviceToken}:`, response.data);
+                console.log(`Notification sent successfully to ${token}:`, response.data);
             } catch (error) {
-                console.error(`Error sending notification to ${deviceToken}:`, error.response ? {
+                console.error(`Error sending notification to ${token}:`, error.response ? {
                     status: error.response.status,
                     data: error.response.data.error.details,
                 } : error.message);
